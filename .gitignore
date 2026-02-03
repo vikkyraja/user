@@ -1,0 +1,28 @@
+# .gitignore
+
+# Environment (keep .env but ignore local overrides)
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules
+
+# Build
+dist
+dist-ssr
+
+# IDE
+.vscode
+.idea
+*.suo
+*.sw?
+
+# Testing
+coverage
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

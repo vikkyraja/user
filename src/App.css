@@ -1,0 +1,103 @@
+@import url('index.css');
+/* Custom theme using Tailwind v4 CSS-based configuration */
+@reference "../index.css";
+/* Keyframe animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Base styles */
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased font-sans;
+  }
+
+  /* Custom scrollbar for webkit browsers */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded hover: bg-gray-400;
+  }
+}
+
+/* Component styles */
+@layer components {
+  .input {
+    @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg 
+           bg-gray-50 text-gray-900 placeholder-gray-400
+           focus:outline-none focus:ring-2 focus:ring-gray-200 
+           focus:bg-white transition-all duration-200;
+  }
+  
+  .select {
+    @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg 
+           bg-white text-gray-700 cursor-pointer
+           focus:outline-none focus:ring-2 focus:ring-gray-200;
+  }
+  
+
+}
+
+
+
+
+
+
+/* Utility layer */
+@layer utilities {
+
+  /* Scrollbar utilities */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme(--color-gray-300) theme(--color-gray-100);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Animation 
