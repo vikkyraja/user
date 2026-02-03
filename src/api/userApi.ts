@@ -6,34 +6,25 @@ import config from '../config/env';
 const apiClient: AxiosInstance = axios.create({
   baseURL: config.api.baseUrl,
   timeout: config.api.timeout,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
 });
 
-// Request interceptor
-apiClient.interceptors.request.use(
-  (requestConfig) => {
-    if (config.isDev) {
-      console.log(`[API] ${requestConfig.method?.toUpperCase()} ${requestConfig.url}`);
-    }
-    return requestConfig;
-  },
-  (error) => Promise.reject(error)
-);
+// Request logging (dev only)
+apiClient.interceptors.request.use((config) => {
+  if (config) console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`);
+  return config;
+});
 
-// Response interceptor
+// Error handling
 apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
-    const message = error.response?.data
-      ? (error.response.data as { error?: string }).error || error.message
-      : error.message;
+    const message = error.response?.data?.error || error.message;
     return Promise.reject(new Error(message));
   }
 );
 
-// Transform API user to User type
+// Transform API user to app User type
 const transformUser = (apiUser: ApiUser): User => ({
   id: apiUser.login.uuid,
   firstName: apiUser.name.first,
@@ -49,24 +40,18 @@ const transformUser = (apiUser: ApiUser): User => ({
   nationality: apiUser.nat,
 });
 
-// Fetch users
-export const fetchUsers = async (count: number = config.pagination.maxResults): Promise<User[]> => {
-  const response = await apiClient.get<ApiResponse>('/', {
-    params: {
-      results: count,
-      nat: 'us',
-      seed: 'user-table-app',
-    },
+// API functions
+export const fetchUsers = async (count = config.pagination.maxResults): Promise<User[]> => {
+  const { data } = await apiClient.get<ApiResponse>('/', {
+    params: { results: count, nat: 'us', seed: 'user-table-app' },
   });
-  return response.data.results.map(transformUser);
+  return data.results.map(transformUser);
 };
 
-export const getUniqueCountries = (users: User[]): string[] => {
-  return [...new Set(users.map((user) => user.country))].sort();
-};
+export const getUniqueCountries = (users: User[]): string[] =>
+  [...new Set(users.map((user) => user.country))].sort();
 
-export const getUniqueGenders = (users: User[]): string[] => {
-  return [...new Set(users.map((user) => user.gender))].sort();
-};
+export const getUniqueGenders = (users: User[]): string[] =>
+  [...new Set(users.map((user) => user.gender))].sort();
 
 export default apiClient;

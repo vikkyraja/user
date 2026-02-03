@@ -1,6 +1,3 @@
-// src/utils/tableHelpers.ts
-import { User } from '../types/user.types';
-
 export const paginateData = <T>(
   data: T[],
   pageIndex: number,

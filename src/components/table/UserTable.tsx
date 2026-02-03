@@ -58,19 +58,19 @@ const UserTable: React.FC = () => {
   const { filteredUsers, pageIndex, pageSize, sorting } = useUserState();
   const { setSorting: setContextSorting, setIsDragging } = useTableContext();
 
-  // Column definitions
+  
 
 const columns = useMemo<ColumnDef<User>[]>(
   () => [
     {
-      accessorKey: 'fullName', // Combined Picture + Name
+      accessorKey: 'fullName', 
       header: 'Name',
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           <img
             src={row.original.picture}
             alt=""
-            className="w-10 h-10 rounded-full object-cover bg-gray-100" // Standard avatar size
+            className="w-10 h-10 rounded-full object-cover bg-gray-100" 
             loading="lazy"
           />
           <span className="font-semibold text-gray-900">
@@ -91,7 +91,7 @@ const columns = useMemo<ColumnDef<User>[]>(
       accessorKey: 'gender',
       header: 'Gender',
       cell: ({ row }) => (
-        // Plain text, Title Case
+        
         <span className="text-gray-900 capitalize">
           {row.original.gender}
         </span>
@@ -130,23 +130,23 @@ const columns = useMemo<ColumnDef<User>[]>(
   ],
   []
 );
-  // Paginated data
+  
   const paginatedData = useMemo(
     () => paginateData(filteredUsers, pageIndex, pageSize),
     [filteredUsers, pageIndex, pageSize]
   );
 
-  // Row IDs for DnD
+  
   const rowIds = useMemo(() => paginatedData.map((row) => row.id), [paginatedData]);
 
-  // DnD sensors
+  
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 8 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 6 } }),
     useSensor(KeyboardSensor)
   );
 
-  // Sorting handler
+  
   const handleSortingChange = useCallback(
     (updater: SortingState | ((old: SortingState) => SortingState)) => {
       const newSorting = typeof updater === 'function' ? updater(sorting) : updater;
@@ -156,7 +156,7 @@ const columns = useMemo<ColumnDef<User>[]>(
     [dispatch, setContextSorting, sorting]
   );
 
-  // Table instance
+  
   const table = useReactTable({
     data: paginatedData,
     columns,
@@ -168,7 +168,7 @@ const columns = useMemo<ColumnDef<User>[]>(
     pageCount: Math.ceil(filteredUsers.length / pageSize),
   });
 
-  // Drag handlers
+  
   const handleDragStart = useCallback(() => {
     setIsDragging(true);
   }, [setIsDragging]);

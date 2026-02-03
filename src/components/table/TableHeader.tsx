@@ -1,30 +1,12 @@
 import React from 'react';
 import { HeaderGroup, flexRender } from '@tanstack/react-table';
 import { User } from '../../types/user.types';
-import { useTableContext } from '../../context/TableContext';
+
 
 interface TableHeaderProps {
   headerGroups: HeaderGroup<User>[];
   rowIds: string[];
 }
-
-const SortAscIcon = () => (
-  <svg className="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-  </svg>
-);
-
-const SortDescIcon = () => (
-  <svg className="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-  </svg>
-);
-
-const SortIcon = () => (
-  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-  </svg>
-);
 
 
 const TableHeader: React.FC<TableHeaderProps> = ({ headerGroups }) => {
@@ -32,10 +14,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({ headerGroups }) => {
     <thead className="bg-white border-b border-gray-200">
       {headerGroups.map((headerGroup) => (
         <tr key={headerGroup.id}>
-          {/* Drag Spacer (Keeps alignment with rows) */}
+         
           <th className="w-12 px-4 py-3 bg-white"></th>
           
-          {/* Removed Selection Checkbox <th> */}
+          
 
           {headerGroup.headers.map((header) => (
             <th
